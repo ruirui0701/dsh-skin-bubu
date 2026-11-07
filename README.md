@@ -46,7 +46,7 @@
 
 ### 方式一：下载 Release（推荐）
 
-1. 打开 [最新 Release](https://github.com/ruirui0701/dsh-skin-bubu/releases/latest) 下载 `dsh-skin-bubu-1.6.0.zip` 并解压；
+1. 打开 [最新 Release](https://github.com/ruirui0701/dsh-skin-bubu/releases/latest) 下载 `dsh-skin-bubu-1.7.0.zip` 并解压；
 2. 在 DeepSeek Harness 里把解压目录作为本地 bundle 安装：
 
 ```
