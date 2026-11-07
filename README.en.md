@@ -46,7 +46,7 @@ Light / Dark · Fully customizable background · One-click recolour
 
 ### Option 1 — Download the Release (recommended)
 
-1. Grab `dsh-skin-bubu-1.6.0.zip` from the [latest release](https://github.com/ruirui0701/dsh-skin-bubu/releases/latest) and unzip it.
+1. Grab `dsh-skin-bubu-1.7.0.zip` from the [latest release](https://github.com/ruirui0701/dsh-skin-bubu/releases/latest) and unzip it.
 2. Install the unzipped folder as a local bundle in DeepSeek Harness:
 
 ```
