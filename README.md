@@ -1,9 +1,11 @@
 # Bubu Theme · dsh-skin-bubu
 
-A cute-bear "Bubu" **liquid-glass** skin for **DeepSeek Harness**, with light and
-dark variants and a customizable background.
+🌐 **English** | [简体中文](README.zh.md)
 
-![preview](./preview-shot.png)
+A cute-bear **Bubu** *liquid-glass* skin for **DeepSeek Harness** — light & dark,
+with a fully customizable background.
+
+![Bubu Theme preview](./preview-shot.png)
 
 ## Features
 
@@ -18,26 +20,48 @@ dark variants and a customizable background.
   image** (cover / contain / tile, with blur and dim sliders).
 - 🎨 **Accent colours** — caramel / matcha / sakura / ocean / grape.
 - 🌗 **Light / dark / system**.
-- 🐾 **Optional Bubu watermark** with opacity.
+- 🐾 **Optional Bubu watermark** with opacity control.
 - 💾 Settings persist automatically.
+
+## Dark mode
+
+![Bubu Theme dark](./preview-dark.png)
 
 ## Install
 
-Through the DeepSeek Harness plugin manager, install this folder as a local
-bundle:
+### Through the DeepSeek Harness plugin manager
+
+Download the [latest release](https://github.com/ruirui0701/dsh-skin-bubu/releases/latest),
+unzip it, then install the folder as a local bundle:
 
 ```
-plugin_manager install_bundle  target = <absolute path to this repo>
+plugin_manager install_bundle  target = <absolute path to the unzipped folder>
 ```
 
-or, after publishing to npm:
+Or point it at this repository checkout. Refresh the page after installing — the
+「布布主题」 button appears at the bottom-right.
+
+### From npm (after publishing)
 
 ```
 dsh plugin --profile <profile> add @ruirui0701/dsh-skin-bubu
 ```
 
-Refresh the page after installing; the 「布布主题」 button appears bottom-right.
+## Usage
+
+Click the **「布布主题」** button at the bottom-right to choose a background
+(preset gradient / solid colour / your own image), accent colour, glass
+transparency (通透) and blur (磨砂), light/dark mode, and the Bubu watermark.
+
+## Project layout
+
+```
+client/client.js    browser side: palette token overrides + glass layer + picker
+lib/index.js        host side (no-op)
+cordis.patch.yml    bundle patch inserting the plugin into a profile
+assets/bubu.png     Bubu artwork (inlined into client.js)
+```
 
 ## License
 
-MIT
+[MIT](./LICENSE)
