@@ -1,0 +1,43 @@
+{
+  "name": "@ruirui0701/dsh-skin-bubu",
+  "version": "1.6.0",
+  "description": "布布主题 · 可爱小熊 Bubu 液态玻璃皮肤：自定义背景 / 主题色 / 浅深色，支持悬浮玻璃、上传壁纸。DeepSeek Harness 插件。",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./client/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": {
+      "inject": ["@deepseek-ai/dsh-client-ui-theme"],
+      "platform": "web",
+      "immediately": true
+    }
+  },
+  "files": [
+    "lib",
+    "client",
+    "assets",
+    "cordis.patch.yml",
+    "skin.json",
+    "README.md",
+    "README.zh.md",
+    "LICENSE",
+    "preview-shot.png",
+    "preview-dark.png"
+  ],
+  "keywords": ["deepseek", "harness", "dsh", "dsh-plugin", "theme", "skin", "glass", "bubu"],
+  "license": "MIT",
+  "author": "ruirui",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruirui0701/dsh-skin-bubu.git",
+    "directory": "."
+  },
+  "homepage": "https://github.com/ruirui0701/dsh-skin-bubu",
+  "bugs": { "url": "https://github.com/ruirui0701/dsh-skin-bubu/issues" },
+  "publishConfig": { "access": "public" }
+}

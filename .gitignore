@@ -1,0 +1,6 @@
+# ignore build/dev bits
+node_modules/
+*.tgz
+*.zip
+.DS_Store
+client/client.template.js
