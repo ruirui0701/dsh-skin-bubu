@@ -50,10 +50,10 @@ window.__ModuleLoader__.load({
         "--dsw-alias-bg-layer-1":         { light: rgbaOf(W, L(0.66, 0.08)), dark: rgbaOf(D, L(0.60, 0.10)) },
         "--dsw-alias-bg-layer-2":         { light: rgbaOf(W, L(0.72, 0.13)), dark: rgbaOf(D, L(0.66, 0.15)) },
         "--dsw-alias-bg-layer-3":         { light: rgbaOf(W, L(0.78, 0.17)), dark: rgbaOf(D, L(0.72, 0.19)) },
-        "--dsw-alias-bg-overlay":         { light: rgbaOf(W, L(0.92, 0.58)), dark: rgbaOf(D, L(0.90, 0.60)) },
+        "--dsw-alias-bg-overlay":         { light: rgbaOf(W, L(0.92, 0.78)), dark: rgbaOf(D, L(0.90, 0.80)) },
         "--dsw-alias-bg-module-platform": { light: rgbaOf(W, L(0.66, 0.10)), dark: rgbaOf(D, L(0.62, 0.12)) },
-        "--dsw-specific-menu":            { light: rgbaOf(W, L(0.88, 0.52)), dark: rgbaOf(D, L(0.86, 0.54)) },
-        "--dsw-menu-surface-fill":        { light: rgbaOf(W, L(0.84, 0.48)), dark: rgbaOf(D, L(0.82, 0.50)) },
+        "--dsw-specific-menu":            { light: rgbaOf(W, L(0.88, 0.72)), dark: rgbaOf(D, L(0.86, 0.74)) },
+        "--dsw-menu-surface-fill":        { light: rgbaOf(W, L(0.84, 0.70)), dark: rgbaOf(D, L(0.82, 0.72)) },
         "--dsw-specific-input-major":     { light: rgbaOf(W, L(0.72, 0.12)), dark: rgbaOf(D, L(0.68, 0.14)) },
         "--dsw-alias-button-elevated-fill":  { light: rgbaOf(W, L(0.85, 0.10)), dark: rgbaOf(D, L(0.80, 0.12)) },
         "--dsw-alias-button-floating-fill":  { light: rgbaOf(W, L(0.80, 0.10)), dark: rgbaOf(D, L(0.75, 0.12)) },
@@ -192,6 +192,9 @@ window.__ModuleLoader__.load({
     var GLASS_CSS = [
       '[class*="_bubble"]{box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 0 0 1px rgba(255,255,255,.16),inset 0 -1px 0 rgba(0,0,0,.04),0 8px 22px rgba(60,40,25,.08)}',
       '[data-menu-material],[class*="_menuSurface"],[class*="_dialog"],[class*="_popover"],[class*="_tooltip"]{box-shadow:inset 0 1px 0 rgba(255,255,255,.6),inset 0 0 0 1px rgba(255,255,255,.14),0 12px 40px rgba(50,30,18,.16)}',
+      /* readability: dialogs and settings are high-opacity frosted glass, not see-through */
+      '[data-dsh-dialog],[class*="_dialog"],[class*="_settings"],[class*="_modal"],[class*="_sheet"],[role="dialog"]{-webkit-backdrop-filter:blur(36px) saturate(180%);backdrop-filter:blur(36px) saturate(180%)}',
+      '[data-dsh-dialog],[class*="_dialog"],[class*="_modal"],[class*="_sheet"],[role="dialog"]{background-color:color-mix(in srgb, var(--dsw-alias-bg-overlay) 88%, transparent)}',
       'img[src*="onboarding-"],[class*="onboarding"] img{display:none!important}',
       '[class*="onboarding"],[class*="_welcome"],[class*="_welcomeArt"],[class*="_heroArt"],[class*="_illustration"]{background-image:none!important}',
       '[class*="_illustration"]{display:none!important}',
