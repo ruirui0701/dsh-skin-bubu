@@ -90,6 +90,12 @@ cordis.patch.yml    bundle patch inserting the plugin into a profile
 assets/bubu.png     Bubu artwork (inlined into client.js)
 ```
 
+## ♻️ Session recycle bin
+
+- **Multi-select delete**: hover a session row in the sidebar for a checkbox, then use the bottom bar to move the selection to the recycle bin (built on the official archive action — safe, files are kept).
+- **Recycle bin entry**: a 🗑 回收站 entry at the bottom of the sidebar, plus a list in the theme panel, with one-click **restore**.
+- **7-day auto cleanup**: on app start, sessions that have been in the recycle bin for more than 7 days are deleted together with their files; `workspace.json` is backed up first (`.bak-<timestamp>`).
+- **↻ Refresh app**: one-click reload from the theme panel.
 ## 📄 License
 
 [MIT](./LICENSE)
