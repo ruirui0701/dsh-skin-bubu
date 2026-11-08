@@ -1,6 +1,6 @@
 {
   "name": "@ruirui0701/dsh-skin-bubu",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "布布主题 · 可爱小熊 Bubu 液态玻璃皮肤：自定义背景 / 主题色 / 浅深色，支持上传壁纸。DeepSeek Harness 插件。",
   "type": "module",
   "main": "lib/index.js",
