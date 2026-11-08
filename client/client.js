@@ -10,6 +10,8 @@ window.__ModuleLoader__.load({
     var DESKTOP_URI = "";
     var STORAGE_KEY = "dsh-skin-bubu:studio2";
     var LEGACY_KEY = "";
+    var RB_KEY = "dsh-skin-bubu:recycle";
+    var RB = { state: { sel: [], open: false } };
 
     /* ---------- colour helpers ---------- */
     function hexToRgb(hex) {
@@ -171,9 +173,38 @@ window.__ModuleLoader__.load({
       ".bubu-accent{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;box-shadow:0 0 0 .5px rgba(0,0,0,.12)}",
       ".bubu-accent.sel{border-color:var(--dsw-alias-bg-overlay,#fffaf4);box-shadow:0 0 0 2px var(--dsw-alias-label-primary,#4a3323)}",
       ".bubu-check{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--dsw-alias-label-secondary,#7c5c45);cursor:pointer}",
+      ".bubu-bin{margin-top:4px;border:.5px solid var(--dsw-alias-border-l2,rgba(160,110,70,.22));border-radius:10px;padding:6px;max-height:150px;overflow:auto;background:rgba(255,255,255,.34)}",
+      "body[data-ds-dark-theme] .bubu-bin{background:rgba(30,20,14,.42)}",
+      ".bubu-bin-empty{font-size:11.5px;color:var(--dsw-alias-label-tertiary,#9a8574);padding:6px 4px}",
+      ".bubu-bin-head{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--dsw-alias-label-secondary,#7c6552);margin-bottom:4px}",
+      ".bubu-bin-restore-all{border:none;background:transparent;color:#e0803c;font-size:11px;cursor:pointer;padding:2px 4px;border-radius:6px}",
+      ".bubu-bin-restore-all:hover{background:rgba(224,128,60,.12)}",
+      ".bubu-bin-row{display:flex;align-items:center;gap:6px;padding:2px 2px;border-radius:7px}",
+      ".bubu-bin-row:hover{background:rgba(224,128,60,.10)}",
+      ".bubu-bin-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;color:var(--dsw-alias-label-primary,#4a3323)}",
+      ".bubu-bin-restore{border:none;background:transparent;color:#e0803c;font-size:11px;cursor:pointer;padding:2px 6px;border-radius:6px;flex:none}",
+      ".bubu-bin-restore:hover{background:rgba(224,128,60,.16)}",
+      "#bubu-bar{position:fixed;left:50%;bottom:26px;transform:translate(-50%,140%);z-index:2147482999;display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:16px;border:.5px solid var(--dsw-alias-border-l3,rgba(120,80,50,.22));background:var(--dsw-alias-bg-overlay,rgba(255,250,244,.86));-webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);box-shadow:0 18px 40px rgba(90,55,30,.26);font-size:12px;color:var(--dsw-alias-label-primary,#4a3323);transition:transform .22s cubic-bezier(.2,.8,.3,1),opacity .2s;opacity:0;pointer-events:none}",
+      "#bubu-bar.on{transform:translate(-50%,0);opacity:1;pointer-events:auto}",
+      "#bubu-bar button{border:none;border-radius:9px;padding:5px 10px;font-size:12px;cursor:pointer;font-family:inherit}",
+      "#bubu-bar .bubu-bar-del{background:linear-gradient(135deg,#f08a4b,#e0663c);color:#fff;font-weight:600}",
+      "#bubu-bar .bubu-bar-del:hover{filter:brightness(1.06)}",
+      "#bubu-bar .bubu-bar-sel,#bubu-bar .bubu-bar-clear{background:rgba(224,128,60,.12);color:#c96a2c}",
+      "#bubu-bar .bubu-bar-sel:hover,#bubu-bar .bubu-bar-clear:hover{background:rgba(224,128,60,.24)}",
+      ".bubu-cb{position:absolute;left:2px;top:50%;transform:translateY(-50%);width:14px;height:14px;margin:0;opacity:0;cursor:pointer;accent-color:#e0803c;z-index:3;transition:opacity .12s}",
+      ".bubu-bin-entry{display:flex;align-items:center;gap:8px;margin:6px 8px 2px;padding:7px 10px;border-radius:9px;font-size:12.5px;color:var(--dsw-alias-label-secondary,#7c5c45);cursor:pointer;border:.5px dashed rgba(160,110,70,.30)}",
+      ".bubu-bin-entry:hover{background:rgba(224,128,60,.12);color:var(--dsw-alias-label-primary,#4a3323)}",
+      "[data-row-key^=\"session:\"]:hover .bubu-cb,.bubu-cb:checked{opacity:1}",
+      "[data-row-key^=\"session:\"]:has(> .bubu-cb:checked){background:rgba(224,128,60,.14)!important;border-radius:8px}",
+      "[data-row-key^=\"session:\"]{position:relative}",
+      "#bubu-toast{position:fixed;left:50%;bottom:96px;transform:translate(-50%,12px);z-index:2147483001;padding:8px 14px;border-radius:12px;background:rgba(255,250,244,.94);color:#4a3323;font-size:12.5px;box-shadow:0 12px 30px rgba(90,55,30,.28);opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;border:.5px solid rgba(160,110,70,.22)}",
+      "#bubu-toast.on{opacity:1;transform:translate(-50%,0)}",
+      "body[data-ds-dark-theme] #bubu-toast{background:rgba(38,26,18,.94);color:#f2e2d2}",
       ".bubu-foot{margin-top:12px;display:flex;justify-content:space-between;align-items:center}",
       ".bubu-reset{border:.5px solid var(--dsw-alias-border-l3,rgba(120,80,50,.22));background:0 0;color:var(--dsw-alias-label-secondary,#7c5c45);font:inherit;font-size:12px;padding:5px 12px;border-radius:9px;cursor:pointer}",
       ".bubu-reset:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(224,135,74,.12))}",
+      ".bubu-reload{border:.5px solid var(--dsw-alias-border-l3,rgba(120,80,50,.22));background:0 0;color:var(--dsw-alias-label-secondary,#7c5c45);font:inherit;font-size:12px;padding:5px 10px;border-radius:9px;cursor:pointer;margin-left:auto;margin-right:6px}",
+      ".bubu-reload:hover{background:var(--dsw-alias-interactive-bg-hover,rgba(224,135,74,.12));color:var(--dsw-alias-brand-primary,#e0874a)}",
       ".bubu-hint{font-size:10.5px;color:var(--dsw-alias-label-tertiary,#a4866f)}",
       "#bubu-panel [hidden]{display:none!important}"
     ].join("\n");
@@ -244,6 +275,8 @@ window.__ModuleLoader__.load({
         var disposers = [];
         var tokenDispose = null;
         var state = loadState();
+        RB.state = { sel: [], open: false };
+        var chrome = buildBinChrome();
 
         function applyPalette() {
           try {
@@ -319,7 +352,9 @@ window.__ModuleLoader__.load({
             '<label class="bubu-check"><input class="bubu-wm-t" type="checkbox" checked/> 布布水印</label>' +
             '<label class="bubu-slider" style="margin-left:auto;width:130px">透明度<input class="bubu-wm-op" type="range" min="4" max="40" step="1"/></label>' +
           '</div>' +
-          '<div class="bubu-foot"><span class="bubu-hint">设置会自动保存</span><button class="bubu-reset" type="button">恢复默认</button></div>';
+          '<div class="bubu-sec">回收站</div>' +
+          '<div class="bubu-bin" data-bin></div>' +
+          '<div class="bubu-foot"><span class="bubu-hint">设置会自动保存</span><button class="bubu-reload" type="button">↻ 刷新软件</button><button class="bubu-reset" type="button">恢复默认</button></div>';
 
         /* fill preset chips */
         var grid = panel.querySelector("[data-grid]");
@@ -390,6 +425,226 @@ window.__ModuleLoader__.load({
           dimEl.style.background = "rgba(8,5,4," + (state.dim / 100) + ")";
           wmEl.style.opacity = state.watermark ? (state.wmOpacity / 100) : 0;
           document.body.classList.toggle("bubu-no-wm", !state.watermark);
+          paintRecycle();
+        }
+
+        /* ---------- recycle bin = official archive + checkbox multi-select ---------- */
+        function callService(name) {
+          var svc = null;
+          try { svc = ctx.get ? ctx.get(name) : null; } catch (e) { svc = null; }
+          if (svc) return svc;
+          try {
+            var list = (ctx.root && ctx.root.registry && ctx.root.registry.values) ? ctx.root.registry.values() : [];
+            for (var k = 0; k < list.length; k++) if (list[k] && list[k].name === name) return list[k].value;
+          } catch (e) {}
+          return null;
+        }
+        function normList(v) { if (!v) return []; if (Array.isArray(v)) return v; if (typeof v.length === "number") return Array.prototype.slice.call(v); return []; }
+
+        RB.load = function () {
+          var s = { sel: [], open: false };
+          try { var raw = localStorage.getItem(RB_KEY); if (raw) s = Object.assign(s, JSON.parse(raw)); } catch (e) {}
+          if (!Array.isArray(s.sel)) s.sel = [];
+          return s;
+        };
+        RB.save = function () { try { localStorage.setItem(RB_KEY, JSON.stringify(RB.state)); } catch (e) {} };
+        RB.state = RB.load();
+        decorateRows();
+        RB.idOf = function (item) { if (!item) return ""; return item.id || item.sessionId || item.key || ""; };
+        RB.titleOf = function (item) { if (!item) return ""; return item.displayTitle || item.title || item.name || RB.idOf(item); };
+        RB.sessionsSnapshot = function () {
+          try {
+            var svc = callService("sessions");
+            var snap = svc && svc.list && svc.list.getSnapshot ? svc.list.getSnapshot() : null;
+            return snap && snap.byId ? snap.byId : {};
+          } catch (e) { return {}; }
+        };
+        RB.archivedIds = function () {
+          try {
+            var ws = callService("workspaces");
+            var snap = ws && ws.list && ws.list.getSnapshot ? ws.list.getSnapshot() : null;
+            return normList(snap && snap.archivedSessionIds);
+          } catch (e) { return []; }
+        };
+        RB.visibleIds = function () {
+          var all = RB.sessionsSnapshot();
+          var arch = RB.archivedIds();
+          var hide = {};
+          for (var i = 0; i < arch.length; i++) hide[arch[i]] = 1;
+          var out = [];
+          for (var id in all) if (Object.prototype.hasOwnProperty.call(all, id) && !hide[id]) out.push(id);
+          return out;
+        };
+        RB.toggle = function (id) {
+          var i = RB.state.sel.indexOf(id);
+          if (i >= 0) RB.state.sel.splice(i, 1); else RB.state.sel.push(id);
+          RB.save(); paintRecycle();
+        };
+        RB.selectAll = function () {
+          var ids = RB.visibleIds();
+          RB.state.sel = ids.slice();
+          RB.save(); paintRecycle();
+        };
+        RB.clearSel = function () { RB.state.sel = []; RB.save(); paintRecycle(); };
+        RB.runDelete = function (ids) {
+          var ws = callService("workspaces");
+          if (!ws || typeof ws.archiveSession !== "function") { toast("这个版本没有会话归档接口"); return Promise.resolve(0); }
+          var all = RB.sessionsSnapshot();
+          var jobs = [];
+          for (var i = 0; i < ids.length; i++) {
+            var id = ids[i];
+            var title = (all[id] && (all[id].displayTitle || all[id].title)) || id;
+            try {
+              if (!window.confirm('把「' + title + '」移入回收站（归档）？\n\n7 天后会自动清理，期间可在「回收站」恢复。')) continue;
+            } catch (e) {}
+            jobs.push(id);
+          }
+          if (!jobs.length) return Promise.resolve(0);
+          var done = 0;
+          var seq = Promise.resolve();
+          jobs.forEach(function (id) {
+            seq = seq.then(function () {
+              return Promise.resolve(ws.archiveSession(id)).then(function () { done++; }).catch(function (err) {
+                console.warn("[bubu] archive failed", id, err);
+                toast("有会话正在运行，无法归档：" + id);
+              });
+            });
+          });
+          return seq.then(function () {
+            RB.state.sel = [];
+            RB.save(); paintRecycle();
+            if (done) toast("已移入回收站 " + done + " 个会话");
+            return done;
+          });
+        };
+        RB.restore = function (id) {
+          var ws = callService("workspaces");
+          if (!ws || typeof ws.unarchiveSession !== "function") { toast("这个版本没有会话恢复接口"); return; }
+          Promise.resolve(ws.unarchiveSession(id)).then(function () {
+            toast("已恢复会话"); paintRecycle();
+          }).catch(function (err) { console.warn("[bubu] unarchive failed", err); toast("恢复失败"); });
+        };
+
+        function toast(msg) {
+          try {
+            var el = document.getElementById("bubu-toast");
+            if (!el) { el = document.createElement("div"); el.id = "bubu-toast"; document.body.appendChild(el); }
+            el.textContent = msg;
+            el.classList.add("on");
+            clearTimeout(el._t);
+            el._t = setTimeout(function () { el.classList.remove("on"); }, 2600);
+          } catch (e) { console.log("[bubu]", msg); }
+        }
+
+        function paintRecycle() {
+          paintBar();
+          renderBin();
+          var boxes = document.querySelectorAll(".bubu-cb");
+          for (var i = 0; i < boxes.length; i++) {
+            var id = boxes[i].getAttribute("data-bubu-row");
+            boxes[i].checked = RB.state.sel.indexOf(id) >= 0;
+          }
+        }
+
+        function paintBar() {
+          var bar = document.getElementById("bubu-bar");
+          if (!bar) return;
+          var n = RB.state.sel.length;
+          bar.classList.toggle("on", n > 0);
+          var cnt = bar.querySelector("[data-count]");
+          if (cnt) cnt.textContent = n ? ("已选 " + n + " 个会话") : "";
+        }
+
+        function renderBin() {
+          var wrap = document.querySelector("#bubu-panel [data-bin]");
+          if (!wrap) return;
+          var all = RB.sessionsSnapshot();
+          var arch = RB.archivedIds();
+          if (!arch.length) { wrap.innerHTML = '<div class="bubu-bin-empty">回收站是空的</div>'; return; }
+          var html = '<div class="bubu-bin-head">回收站 · ' + arch.length + ' 个会话 <button class="bubu-bin-restore-all" type="button">全部恢复</button></div><div class="bubu-bin-list">';
+          for (var i = 0; i < arch.length; i++) {
+            var id = arch[i];
+            var item = all[id] || {};
+            var title = item.displayTitle || item.title || id;
+            html += '<div class="bubu-bin-row"><span class="bubu-bin-title" title="' + esc(title) + '">' + esc(title) + '</span><button class="bubu-bin-restore" type="button" data-id="' + esc(id) + '">恢复</button></div>';
+          }
+          html += '</div>';
+          wrap.innerHTML = html;
+          var btns = wrap.querySelectorAll(".bubu-bin-restore");
+          for (var b = 0; b < btns.length; b++) btns[b].addEventListener("click", function (ev) { RB.restore(ev.currentTarget.getAttribute("data-id")); });
+          var allBtn = wrap.querySelector(".bubu-bin-restore-all");
+          if (allBtn) allBtn.addEventListener("click", function () { for (var j = 0; j < arch.length; j++) RB.restore(arch[j]); });
+        }
+
+        /* checkbox injected into every session row (official hover-action slot) */
+        function buildBinChrome() {
+          var bar = document.createElement("div");
+          bar.id = "bubu-bar";
+          bar.innerHTML = '<span data-count></span><button class="bubu-bar-del" type="button">移到回收站</button><button class="bubu-bar-sel" type="button">全选</button><button class="bubu-bar-clear" type="button">取消</button>';
+          document.body.appendChild(bar);
+          bar.querySelector(".bubu-bar-del").addEventListener("click", function () { RB.runDelete(RB.state.sel.slice()); });
+          bar.querySelector(".bubu-bar-sel").addEventListener("click", function () { RB.selectAll(); });
+          bar.querySelector(".bubu-bar-clear").addEventListener("click", function () { RB.clearSel(); });
+
+          /* row checkbox via MutationObserver on the sidebar session rows */
+          var scheduled = false;
+          var rowObserver = new MutationObserver(function () {
+            if (scheduled) return;
+            scheduled = true;
+            (window.requestAnimationFrame || function (f) { return setTimeout(f, 16); })(function () {
+              scheduled = false;
+              decorateRows();
+            });
+          });
+          rowObserver.observe(document.body, { childList: true, subtree: true });
+          decorateRows();
+          return { bar: bar, observer: rowObserver };
+        }
+        function decorateRows() {
+          try {
+            var rows = document.querySelectorAll('[data-row-key^="session:"]');
+            if (!rows || !rows.length) return;
+            for (var i = 0; i < rows.length; i++) {
+              var row = rows[i];
+              if (row.querySelector(":scope > .bubu-cb")) continue;
+              var key = row.getAttribute("data-row-key") || "";
+              var id = key.indexOf("session:") === 0 ? key.slice(8) : "";
+              if (!id) continue;
+              var cb = document.createElement("input");
+              cb.type = "checkbox"; cb.className = "bubu-cb"; cb.title = "选择这个会话";
+              cb.setAttribute("data-bubu-row", id);
+              cb.checked = RB.state.sel.indexOf(id) >= 0;
+              cb.addEventListener("click", function (ev) {
+                ev.stopPropagation();
+                var t = ev.currentTarget;
+                var sid = t.getAttribute("data-bubu-row");
+                if (!sid) {
+                  var p = t.parentNode;
+                  sid = (p && (p.getAttribute("data-session-id") || p.getAttribute("data-id"))) || "";
+                  t.setAttribute("data-bubu-row", sid);
+                }
+                if (sid) RB.toggle(sid);
+              });
+              row.insertBefore(cb, row.firstChild);
+            }
+            /* a "回收站" entry at the end of the sidebar tree, opening our panel */
+            if (panel && !document.querySelector(".bubu-bin-entry")) {
+              var trees = document.querySelectorAll('[role="tree"]');
+              if (trees.length) {
+                var entry = document.createElement("div");
+                entry.className = "bubu-bin-entry";
+                entry.textContent = "🗑  回收站";
+                entry.title = "已归档的会话，7 天后自动清理";
+                entry.addEventListener("click", function (ev) {
+                  ev.preventDefault(); ev.stopPropagation();
+                  panel.classList.add("open");
+                  var bin = panel.querySelector("[data-bin]");
+                  if (bin && bin.scrollIntoView) bin.scrollIntoView({ block: "center" });
+                });
+                trees[trees.length - 1].appendChild(entry);
+              }
+            }
+          } catch (e) {}
         }
         function paintPanel() {
           var sws = grid.querySelectorAll(".bubu-sw");
@@ -414,7 +669,7 @@ window.__ModuleLoader__.load({
         function commit() { saveState(state); paint(); }
 
         /* wire events */
-        fab.addEventListener("click", function () { panel.classList.toggle("open"); if (panel.classList.contains("open")) paintMode(); });
+        fab.addEventListener("click", function () { panel.classList.toggle("open"); if (panel.classList.contains("open")) { paintMode(); renderBin(); } });
         panel.querySelector(".bubu-x").addEventListener("click", function () { panel.classList.remove("open"); });
         grid.addEventListener("click", function (ev) {
           var btn = ev.target.closest ? ev.target.closest(".bubu-sw") : null; if (!btn) return;
@@ -440,6 +695,13 @@ window.__ModuleLoader__.load({
         });
         if (ctx && typeof ctx.on === "function") { try { ctx.on("theme/change", function () { paintMode(); }); } catch (e) {} }
         panel.querySelector(".bubu-reset").addEventListener("click", function () { state = cloneDefault(); applyPalette(); commit(); });
+        panel.querySelector(".bubu-reload").addEventListener("click", function () {
+          try {
+            var btn = panel.querySelector(".bubu-reload");
+            if (btn) { btn.disabled = true; btn.textContent = "↻ 刷新中…"; }
+            if (typeof window !== "undefined" && window.location) window.location.reload();
+          } catch (e) { console.warn("[bubu] reload failed", e); }
+        });
 
         fileInput.addEventListener("change", function () {
           var f = fileInput.files && fileInput.files[0]; if (!f) return;
@@ -472,6 +734,9 @@ window.__ModuleLoader__.load({
           try { style.remove(); } catch (e) {}
           try { bg.remove(); } catch (e) {}
           try { frost.remove(); } catch (e) {}
+          try { if (chrome && chrome.bar) chrome.bar.remove(); } catch (e) {}
+          try { if (chrome && chrome.observer) chrome.observer.disconnect(); } catch (e) {}
+          try { var t = document.getElementById("bubu-toast"); if (t) t.remove(); } catch (e) {}
           try { fab.remove(); } catch (e) {}
           try { panel.remove(); } catch (e) {}
           try { document.body.classList.remove("bubu-no-wm"); } catch (e) {}
